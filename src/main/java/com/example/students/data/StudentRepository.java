@@ -1,5 +1,6 @@
 package com.example.students.data;
 
+import lombok.Setter;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -7,7 +8,8 @@ import java.util.*;
 @Component
 public class StudentRepository {
 
-    private final List<Student> students = new ArrayList<>();
+    @Setter
+    private List<Student> students = new ArrayList<>();
 
     public void createStudent(Student student) {
         students.add(student);
@@ -24,5 +26,12 @@ public class StudentRepository {
                 .filter(it -> it.name().equals(name))
                 .toList();
         students.removeAll(studentsToRemove);
+    }
+
+    public Long findMaxIndex() {
+        return students.stream()
+                .map(Student::index)
+                .max(Comparator.naturalOrder())
+                .orElse(0L);
     }
 }
