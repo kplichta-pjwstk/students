@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15.0
+    environment:
+      POSTGRES_PASSWORD: student
+      POSTGRES_USER: student
+      POSTGRES_DATABASE: student
+    ports:
+      - "54329:5432"
