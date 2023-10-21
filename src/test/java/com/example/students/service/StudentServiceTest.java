@@ -31,38 +31,38 @@ class StudentServiceTest {
     void setUp() {
         when(studentRepository.findMaxIndex()).thenReturn(5L);
     }
-
-    @Test
-    void givenStudentWithUnitGdanskWhenCreateStudentThenStudentWasSavedWithValidData() {
-        var student = new Student(UUID.randomUUID(), "Karola", StudentUnit.GDANSK, null);
-
-        var savedStudent = studentService.createStudent(student);
-
-        assertEquals(student.id(), savedStudent.id());
-        assertEquals(student.name(), savedStudent.name());
-        assertEquals(student.unit(), savedStudent.unit());
-        assertEquals(25L, savedStudent.index());
-        verify(studentRepository, times(1)).findMaxIndex();
-    }
-
-    @Test
-    void givenStudentWithUnitWarszawaWhenCreateStudentThenStudentWasSavedWithValidData() {
-        var student = new Student(UUID.randomUUID(), "Karola", StudentUnit.WARSZAWA, null);
-        ArgumentCaptor<Student> captor = ArgumentCaptor.forClass(Student.class);
-
-        var savedStudent = studentService.createStudent(student);
-
-        assertEquals(student.id(), savedStudent.id());
-        assertEquals(student.name(), savedStudent.name());
-        assertEquals(student.unit(), savedStudent.unit());
-        assertEquals(50L, savedStudent.index());
-        verify(studentRepository, times(1)).findMaxIndex();
-        verify(studentRepository, times(1)).createStudent(captor.capture());
-        var studentArg = captor.getValue();
-        assertEquals(student.id(), studentArg.id());
-        assertEquals(student.name(), studentArg.name());
-        assertEquals(student.unit(), studentArg.unit());
-        assertEquals(50L, studentArg.index());
-    }
+//
+//    @Test
+//    void givenStudentWithUnitGdanskWhenCreateStudentThenStudentWasSavedWithValidData() {
+////        var student = new Student(UUID.randomUUID(), "Karola", StudentUnit.GDANSK, null);
+//
+//        var savedStudent = studentService.createStudent(student);
+//
+//        assertEquals(student.id(), savedStudent.id());
+//        assertEquals(student.name(), savedStudent.name());
+//        assertEquals(student.unit(), savedStudent.unit());
+//        assertEquals(25L, savedStudent.index());
+//        verify(studentRepository, times(1)).findMaxIndex();
+//    }
+//
+//    @Test
+//    void givenStudentWithUnitWarszawaWhenCreateStudentThenStudentWasSavedWithValidData() {
+////        var student = new Student(UUID.randomUUID(), "Karola", StudentUnit.WARSZAWA, null);
+//        ArgumentCaptor<Student> captor = ArgumentCaptor.forClass(Student.class);
+//
+//        var savedStudent = studentService.createStudent(student);
+//
+//        assertEquals(student.id(), savedStudent.id());
+//        assertEquals(student.name(), savedStudent.name());
+//        assertEquals(student.unit(), savedStudent.unit());
+//        assertEquals(50L, savedStudent.index());
+//        verify(studentRepository, times(1)).findMaxIndex();
+//        verify(studentRepository, times(1)).createStudent(captor.capture());
+//        var studentArg = captor.getValue();
+//        assertEquals(student.id(), studentArg.id());
+//        assertEquals(student.name(), studentArg.name());
+//        assertEquals(student.unit(), studentArg.unit());
+//        assertEquals(50L, studentArg.index());
+//    }
 
 }

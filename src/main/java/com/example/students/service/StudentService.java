@@ -16,14 +16,14 @@ public class StudentService {
     private final StudentRepository studentRepository;
 
     public Student createStudent(Student student) {
-        var index = createIndex(student.unit());
-        var studentToSave = new Student(student.id(), student.name(), student.unit(), index);
-        studentRepository.createStudent(studentToSave);
+        var index = createIndex(student.getUnit());
+        var studentToSave = new Student(student.getId(), student.getName(), student.getUnit(), index);
+        studentRepository.save(studentToSave);
         return studentToSave;
     }
 
     public Optional<Student> getStudentById(UUID id) {
-        return studentRepository.getStudentById(id);
+        return studentRepository.findById(id);
     }
 
     public void deleteByName(String name) {

@@ -12,7 +12,7 @@ class StudentRepositoryTest {
     @Test
     void givenEmptyStudentsListWhenGetMaxIndexThenReturnZero() {
         List<Student> students = Collections.emptyList();
-        var repository = new StudentRepository();
+        var repository = new StudentListContainer();
         repository.setStudents(students);
 
         var index = repository.findMaxIndex();

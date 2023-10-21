@@ -1,37 +1,20 @@
 package com.example.students.data;
 
-import lombok.Setter;
-import org.springframework.stereotype.Component;
+import jakarta.transaction.Transactional;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.UUID;
 
-@Component
-public class StudentRepository {
+@Repository
+public interface StudentRepository extends CrudRepository<Student, UUID> {
 
-    @Setter
-    private List<Student> students = new ArrayList<>();
+    @Modifying
+    @Transactional
+    void deleteByName(String name);
 
-    public void createStudent(Student student) {
-        students.add(student);
-    }
-
-    public Optional<Student> getStudentById(UUID id) {
-        return students.stream()
-                .filter(it -> it.id().equals(id))
-                .findFirst();
-    }
-
-    public void deleteByName(String name) {
-        var studentsToRemove = students.stream()
-                .filter(it -> it.name().equals(name))
-                .toList();
-        students.removeAll(studentsToRemove);
-    }
-
-    public Long findMaxIndex() {
-        return students.stream()
-                .map(Student::index)
-                .max(Comparator.naturalOrder())
-                .orElse(0L);
-    }
+    @Query("select max(s.index) from Student s group by s.id")
+    Long findMaxIndex();
 }
