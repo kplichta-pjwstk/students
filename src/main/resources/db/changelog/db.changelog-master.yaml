@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: createStudentTable
+      author: Karola
+      changes:
+        - createTable:
+            tableName: student
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: student_id_pk
+                  defaultValueComputed: gen_random_uuid()
+              - column:
+                  name: name
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: unit
+                  type: text
+                  constraints:
+                    nullable: false
+              - column:
+                  name: index
+                  type: bigint
