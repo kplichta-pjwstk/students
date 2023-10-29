@@ -37,6 +37,11 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+<!--        Dodajemy nową dependency, żeby móc korzystać z walidacji danych-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository //ta adnotacja mówi springowi, że jest to definicja beana z warstwy JPA (warstwa będzie miała znaczenie przy testach)
@@ -19,5 +20,5 @@ public interface StudentRepository extends CrudRepository<Student, UUID> {
     void deleteByName(String name);
 
     @Query("select max(s.index) from Student s group by s.id") //query pozwala napisać nam bardziej skomplikowane zapytania, których spring nie jest w stanie wygenerować z metod
-    Long findMaxIndex();
+    Optional<Long> findMaxIndex();
 }

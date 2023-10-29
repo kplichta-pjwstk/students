@@ -1,22 +1,15 @@
 package com.example.students.service;
 
-import com.example.students.data.Student;
 import com.example.students.data.StudentRepository;
-import com.example.students.data.StudentUnit;
 import lombok.extern.java.Log;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-
+//testy zakomentowane - na następnych zajęciach będziemy zajmować się ich poprawą
 @Log
 @ExtendWith(MockitoExtension.class)
 class StudentServiceTest {
@@ -29,7 +22,7 @@ class StudentServiceTest {
 
     @BeforeEach
     void setUp() {
-        when(studentRepository.findMaxIndex()).thenReturn(5L);
+//        when(studentRepository.findMaxIndex()).thenReturn(5L);
     }
 //
 //    @Test

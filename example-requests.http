@@ -1,0 +1,16 @@
+###
+POST http://localhost:8080/students
+Content-Type: application/json
+
+{
+  "name": "Karola",
+  "unit": "GDANSK"
+}
+
+###
+#Tu id do ścieżki pobieramy z bazy danych
+GET http://localhost:8080/students/{{id}}}
+
+###
+DELETE http://localhost:8080/students?name=Karola
+

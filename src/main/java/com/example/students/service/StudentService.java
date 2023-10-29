@@ -3,10 +3,13 @@ package com.example.students.service;
 import com.example.students.data.Student;
 import com.example.students.data.StudentRepository;
 import com.example.students.data.StudentUnit;
+import com.example.students.exception.ResourceNotFoundException;
+import com.example.students.mappery.StudentMapper;
+import com.example.students.resource.CreateStudent;
+import com.example.students.resource.StudentDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -14,16 +17,20 @@ import java.util.UUID;
 public class StudentService {
 
     private final StudentRepository studentRepository;
+    private final StudentMapper studentMapper;
 
-    public Student createStudent(Student student) {
-        var index = createIndex(student.getUnit());
-        var studentToSave = new Student(student.getId(), student.getName(), student.getUnit(), index);
+    public Student createStudent(CreateStudent createStudent) {
+        var studentToSave = studentMapper.toEntity(createStudent);
+        var index = createIndex(createStudent.getUnit());
+        studentToSave.setIndex(index);
         studentRepository.save(studentToSave);
         return studentToSave;
     }
 
-    public Optional<Student> getStudentById(UUID id) {
-        return studentRepository.findById(id);
+    public StudentDto getStudentById(UUID id) {
+        return studentRepository.findById(id)
+                .map(studentMapper::toDto)
+                .orElseThrow(() -> new ResourceNotFoundException("Student " + id + "not found"));
     }
 
     public void deleteByName(String name) {
@@ -31,10 +38,11 @@ public class StudentService {
     }
 
     private Long createIndex(StudentUnit unit) {
-        if(StudentUnit.GDANSK.equals(unit)) {
-            return 5 * studentRepository.findMaxIndex();
+        var maxIndex = studentRepository.findMaxIndex().orElse(1L);
+        if (StudentUnit.GDANSK.equals(unit)) {
+            return 5 * maxIndex;
         } else {
-            return 10* studentRepository.findMaxIndex();
+            return 10 * maxIndex;
         }
     }
 }

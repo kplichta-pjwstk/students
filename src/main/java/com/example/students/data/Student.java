@@ -1,13 +1,9 @@
 package com.example.students.data;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -20,6 +16,19 @@ public class Student {
     @GeneratedValue //ta adnotacja informuje nas o tym, że wartość pola id będzie generowana automatycznie i pole to nie powinno być uzupełniane przez apliakcje przy tworzeniu obiektu
     private UUID id;
     private String name;
+    @Enumerated(EnumType.STRING)
     private StudentUnit unit;
+    @Setter
     private Long index;
+    @ManyToMany
+    @JoinTable(name = "student_lecture",
+            joinColumns = @JoinColumn(table = "student", name = "student_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(table = "lecture", name = "lecture_id", referencedColumnName = "id")
+    )
+    private List<Lecture> lecture;
+
+    public Student(String name, StudentUnit unit) {
+        this.name = name;
+        this.unit = unit;
+    }
 }
