@@ -18,7 +18,7 @@ public class ExceptionResponseControllerAdvice {
     //Aby możemy zdefiniować reakcję na wyjątek jak poniżej ustawiając treść body
     //odpowiedzi oraz jej status przez adnotacje
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(value = ResourceNotFoundException.class)
+    @ExceptionHandler(value = {ResourceNotFoundException.class, StudentNotFoundException.class})
     @ResponseBody
     public ErrorResponse handeNotFound(RuntimeException exception) {
         return new ErrorResponse(Instant.now(), exception.getMessage());

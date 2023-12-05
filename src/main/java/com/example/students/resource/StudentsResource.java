@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -42,5 +43,10 @@ public class StudentsResource {
             throw new NotAllowedOperationException();
         }
         studentService.deleteByName(name);
+    }
+
+    @GetMapping
+    public List<StudentDto> getByName(@RequestParam String name) {
+        return studentService.getNameBy(name);
     }
 }

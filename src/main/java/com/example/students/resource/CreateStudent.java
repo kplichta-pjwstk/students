@@ -2,6 +2,7 @@ package com.example.students.resource;
 
 import com.example.students.data.StudentUnit;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ import lombok.Setter;
 //wykorzystaniu wzorca CommandHandler)
 @Getter
 @Setter
+@AllArgsConstructor
 public class CreateStudent {
 
     //korzystamy z gotowego walidatora (dodanego z nowym dependency,

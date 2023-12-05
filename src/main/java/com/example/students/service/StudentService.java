@@ -4,12 +4,14 @@ import com.example.students.data.Student;
 import com.example.students.data.StudentRepository;
 import com.example.students.data.StudentUnit;
 import com.example.students.exception.ResourceNotFoundException;
+import com.example.students.exception.StudentNotFoundException;
 import com.example.students.mappery.StudentMapper;
 import com.example.students.resource.CreateStudent;
 import com.example.students.resource.StudentDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -34,7 +36,11 @@ public class StudentService {
     }
 
     public void deleteByName(String name) {
-        studentRepository.deleteByName(name);
+        var students = studentRepository.findByName(name);
+        if(students.isEmpty()) {
+            throw new StudentNotFoundException("Student with name " + name + " not found.");
+        }
+        studentRepository.deleteAll(students);
     }
 
     private Long createIndex(StudentUnit unit) {
@@ -44,5 +50,11 @@ public class StudentService {
         } else {
             return 10 * maxIndex;
         }
+    }
+
+    public List<StudentDto> getNameBy(String name) {
+        return studentRepository.findFromGdanskByName(name)
+                .stream().map(studentMapper::toDto)
+                .toList();
     }
 }

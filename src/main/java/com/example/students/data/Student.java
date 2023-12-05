@@ -31,4 +31,10 @@ public class Student {
         this.name = name;
         this.unit = unit;
     }
+
+    public Student(String name, StudentUnit unit, Long index) {
+        this.name = name;
+        this.unit = unit;
+        this.index = index;
+    }
 }
