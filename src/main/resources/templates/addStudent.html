@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add student</title>
+</head>
+<body>
+<form method="POST" th:action="@{/students-page/add}" th:object="${student}">
+    <label>
+        Name
+        <input th:field="*{name}"/>
+    </label>
+    <label>
+        Unit
+    <select th:field="*{unit}">
+        <option th:each="studentUnit: ${T(com.example.students.data.StudentUnit).values()}"
+                th:value="${studentUnit}" th:text="${studentUnit}">
+        </option>
+    </select>
+    </label>
+    <button type="submit">Dodaj</button>
+</form>
+</body>
+<footer th:insert="footer"></footer>
+</html>

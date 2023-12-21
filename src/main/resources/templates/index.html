@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+    <link rel="stylesheet" th:href="@{/styles.css}"/>
+</head>
+<body>
+<p th:text="'Hello ' + ${name != null ? name : 'world'}" ></p>
+Hello <p th:if="${name} != null" th:text="${name}"></p>
+<p th:unless="${name} != null">world</p>
+
+<a th:href="@{/students-page/add}">Dodaj Studenta</a>
+<table>
+    <tbody>
+        <tr th:each="student : ${students}">
+            <td th:text="${student.name}"></td>
+            <td th:text="${student.unit}"></td>
+            <td th:text="${student.index}"></td>
+        </tr>
+    </tbody>
+</table>
+</body>
+<footer th:insert="footer"></footer>
+</html>
