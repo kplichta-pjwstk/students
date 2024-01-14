@@ -23,7 +23,7 @@ import static io.restassured.module.mockmvc.RestAssuredMockMvc.*;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
+//konfigurujemy testy standardowo stawiamy kontekst springa oraz dodajemy skonfigurowanego mockmvc aby wysyłać przy jego pomocy zapytania
 @SpringBootTest
 @AutoConfigureMockMvc
 public class RestAssuredTests {
@@ -34,6 +34,7 @@ public class RestAssuredTests {
     @Autowired
     private StudentRepository studentRepository;
 
+    // przed każdym testem konfigurujemy restassured podając mu mockMVC, przez statyczną metodę mockMvc()
     @BeforeEach
     void setUp() {
         mockMvc(mockMvc);
@@ -47,6 +48,10 @@ public class RestAssuredTests {
     @Test
     void givenCreateStudentWhenPostStudentsThenStudentCreated() {
         var createStudent = new CreateStudent("Karola", StudentUnit.GDANSK);
+        //następnie definiujemy sekcje given, when i then
+        //w given możemy dodać wszystkie ustawienia, nagłówki, body, parametry
+        //w when podajemy metodę i dokładną ścieżkę do której wysyłamy zapytanie
+        //w then weryfikujemy czy w odpowiedzi otrzymaliśmy poprawne dane tj. status, dane z body, nagłówki itp.
         given()
            .body(createStudent)
            .contentType(MediaType.APPLICATION_JSON)
@@ -70,6 +75,7 @@ public class RestAssuredTests {
             .get("/students/" + student.getId())
         .then()
             .status(HttpStatus.OK)
+//                do parametrów bezpośrednio w json możemy odwoływać się bezpośrednio po nazwie
             .body("id", equalTo(student.getId().toString()))
             .body("name", equalTo(student.getName()))
             .body("unit", equalTo(student.getUnit().toString()))
@@ -89,9 +95,11 @@ public class RestAssuredTests {
         .when()
            .get("/students")
         .then()
+                //jeśli parametr jest listą, możemy wywołać na niej metody korzystająć z $ lub pobrać elementy z listy wskazując na index, jak w przykładzie poniżej np. [0]
            .body("$.size()", equalTo(1))
            .body("[0].id", equalTo(student1.getId().toString()))
            .body("[0].name", equalTo(student1.getName()))
+                //pamiętajcie, że enumy w json to Stringi, nie zostaną zmapowane do wartości Enumowych więc zawsze porównujemy te wartości do typu String
            .body("[0].unit", equalTo(student1.getUnit().toString()))
            .body("[0].index", equalTo(student1.getIndex().intValue()));
     }

@@ -57,6 +57,7 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+<!--        dodajemy dependency do bilbioteki rest assured, korzystamy z wersji springowej (widać do w artifactId) więc nie musimy podawać wersji, zadba o to spring boot-->
         <dependency>
             <groupId>io.rest-assured</groupId>
             <artifactId>spring-mock-mvc</artifactId>
