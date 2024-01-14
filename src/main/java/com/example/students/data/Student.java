@@ -20,12 +20,12 @@ public class Student {
     private StudentUnit unit;
     @Setter
     private Long index;
-//    @ManyToMany
-//    @JoinTable(name = "student_lecture",
-//            joinColumns = @JoinColumn(table = "student", name = "student_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(table = "lecture", name = "lecture_id", referencedColumnName = "id")
-//    )
-//    private List<Lecture> lecture;
+    @ManyToMany
+    @JoinTable(name = "student_lecture",
+            joinColumns = @JoinColumn(table = "student", name = "student_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(table = "lecture", name = "lecture_id", referencedColumnName = "id")
+    )
+    private List<Lecture> lecture;
 
     public Student(String name, StudentUnit unit) {
         this.name = name;
